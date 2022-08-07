@@ -28,11 +28,19 @@ select * from users;
 
 delete from users
 where last_name is null;
---  1 to m
--- 1 to many
+
+insert into posts
+	(title, creator_id)
+values ('my second post', 1);
+
 create table posts(
     id serial primary key,
     title text not null,
     body text default '...',
     "creatorId" int references users(id) not null
 );
+
+select * from posts;
+
+select u.id, p.id, first_name, title from users u
+inner join posts p on u.id = posts.creator_id
