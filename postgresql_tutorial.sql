@@ -49,3 +49,26 @@ where p.title ilike '%sEcOnd%' and u.id = 1;
 
 --1 user * 2 posts
 --x * (y, z) = (x, y), (x, z)
+
+create table comments (
+	id serial primary key,
+	message text not null,
+	post_id int references posts(id),
+	creator_id int references users(id)
+);
+
+drop table comments;
+
+insert into comments
+(message, post_id, creator_id)
+values('hello, nice post!', 2, 5);
+
+select * from comments;
+
+select c.message, p.title,
+u.first_name author_post,
+u2.first_name author_comment
+from comments c
+inner join posts p on c.post_id = p.id
+inner join users u on p.creator_id = u.id
+inner join users u2 on c.creator_id = u2.id;
