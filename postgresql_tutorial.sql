@@ -1,3 +1,7 @@
+--basic post, comment & like DB schema
+
+--users
+
 create table users (
     id serial primary key,
     first_name varchar(255) not null,
@@ -29,9 +33,7 @@ select * from users;
 delete from users
 where last_name is null;
 
-insert into posts
-	(title, creator_id)
-values ('the great fifth post', 5);
+--posts (1-m)
 
 create table posts(
     id serial primary key,
@@ -40,6 +42,10 @@ create table posts(
     "creatorId" int references users(id) not null
 );
 
+insert into posts
+	(title, creator_id)
+values ('the great fifth post', 5);
+
 select * from posts;
 
 select u.id users_id, p.id posts_id,
@@ -47,8 +53,7 @@ first_name, title from users u
 inner join posts p on u.id = p.creator_id
 where p.title ilike '%sEcOnd%' and u.id = 1;
 
---1 user * 2 posts
---x * (y, z) = (x, y), (x, z)
+--comments
 
 create table comments (
 	id serial primary key,
@@ -72,3 +77,18 @@ from comments c
 inner join posts p on c.post_id = p.id
 inner join users u on p.creator_id = u.id
 inner join users u2 on c.creator_id = u2.id;
+
+--likes (m-m)
+
+--join table
+create table favorites(
+	user_id int references users(id),
+	post_id int references posts(id),
+	primary key (user_id, post_id) -- composite key
+)
+
+insert into favorites
+(user_id, post_id)
+values (2, 7)
+
+select * from favorites;
