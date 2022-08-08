@@ -78,7 +78,7 @@ inner join posts p on c.post_id = p.id
 inner join users u on p.creator_id = u.id
 inner join users u2 on c.creator_id = u2.id;
 
---likes (m-m)
+--favorites (m-m)
 
 --join table
 create table favorites(
@@ -92,3 +92,18 @@ insert into favorites
 values (2, 7)
 
 select * from favorites;
+
+--friends
+
+--join table
+create table friends(
+	user_id1 int references users(id),
+	user_id2 int references users(id),
+	primary key (user_id1, user_id2)
+);
+
+insert into friends 
+	(user_id1, user_id2)
+	values (1, 2);
+	
+select * from friends;
