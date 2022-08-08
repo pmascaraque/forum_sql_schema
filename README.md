@@ -1,1 +1,1 @@
-baby steps with PostgreSQL
+baby steps with SQL DBs
