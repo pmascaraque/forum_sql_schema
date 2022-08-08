@@ -31,7 +31,7 @@ where last_name is null;
 
 insert into posts
 	(title, creator_id)
-values ('my second post', 1);
+values ('the great fifth post', 5);
 
 create table posts(
     id serial primary key,
@@ -42,5 +42,10 @@ create table posts(
 
 select * from posts;
 
-select u.id, p.id, first_name, title from users u
-inner join posts p on u.id = posts.creator_id
+select u.id users_id, p.id posts_id,
+first_name, title from users u
+inner join posts p on u.id = p.creator_id
+where p.title ilike '%sEcOnd%' and u.id = 1;
+
+--1 user * 2 posts
+--x * (y, z) = (x, y), (x, z)
