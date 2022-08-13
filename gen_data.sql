@@ -1,4 +1,37 @@
 --basic tables
+create table users (
+    id serial primary key,
+    first_name varchar(255) not null,
+    last_name text,
+    age int,
+    email text unique not null
+);
+
+create table posts(
+    id serial primary key,
+    title text not null,
+    body text default '...',
+    "creatorId" int references users(id) not null
+);
+
+create table comments (
+    id serial primary key,
+    message text not null,
+    post_id int references posts(id),
+    creator_id int references users(id)
+);
+
+create table favorites(
+   user_id int references users(id),
+   post_id int references posts(id),
+   primary key (user_id, post_id) -- composite key
+);
+
+create table friends (
+    user_id1 int references users(id),
+    user_id2 int references users(id),
+    primary key (user_id1, user_id2)
+);
 
 --insert fake data
 TRUNCATE TABLE users,posts,comments,favorites,friends RESTART IDENTITY;
