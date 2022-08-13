@@ -39,7 +39,7 @@ create table posts(
     id serial primary key,
     title text not null,
     body text default '...',
-    "creatorId" int references users(id) not null
+    'creatorId' int references users(id) not null
 );
 
 insert into posts
