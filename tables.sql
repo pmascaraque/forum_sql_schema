@@ -132,3 +132,18 @@ select max(p.title), post_id, count(*) from favorites f
 inner join posts p on f.post_id = p.id
 group by post_id 
 order by count(*) desc;
+
+--who has no friends
+
+select * from users u
+left join friends f 
+	on f.user_id1 = u.id
+		or f.user_id2 = u.id
+where f.user_id1 is null;
+
+--users with no posts
+
+select * from users u
+left join posts p 
+	on p."creatorId" = u.id
+where p."creatorId" is null;
