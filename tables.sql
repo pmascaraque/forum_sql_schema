@@ -85,6 +85,7 @@ inner join users u2 on c.creator_id = u2.id;
 -- many to many
 
 -- favorites (join table)
+
 create table favorites(
    user_id int references users(id),
    post_id int references posts(id),
@@ -113,3 +114,16 @@ insert into friends
     values (1, 2);
 
 select * from  friends;
+
+--who has the most friends
+select	
+		max(u.first_name),
+		user_id1,
+		array_agg(user_id2),
+		count(*)
+from friends f
+inner join users u on u.id = f.user_id1
+group by user_id1
+order by count(*) desc;
+
+
