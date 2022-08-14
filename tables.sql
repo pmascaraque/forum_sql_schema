@@ -126,4 +126,9 @@ inner join users u on u.id = f.user_id1
 group by user_id1
 order by count(*) desc;
 
+--post with most favorites
 
+select max(p.title), post_id, count(*) from favorites f
+inner join posts p on f.post_id = p.id
+group by post_id 
+order by count(*) desc;
