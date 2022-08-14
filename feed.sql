@@ -39,3 +39,14 @@ where post_id = 15;
 select count(*) from comments c
 inner join users u on u.id = c.creator_id
 where post_id = 7;
+
+--posts written by friends
+
+select * from users where id = 1;
+
+select * from posts p
+inner join friends f
+on (f.user_id1 = p."creatorId"
+or f.user_id2 = p."creatorId")
+and (f.user_id1 = 1 or f.user_id2 = 1);
+--where "creatorId" != 1; --can only see posts not written by user
