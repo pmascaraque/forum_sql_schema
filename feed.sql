@@ -40,13 +40,20 @@ select count(*) from comments c
 inner join users u on u.id = c.creator_id
 where post_id = 7;
 
---posts written by friends
+--posts written and liked by friends
 
-select * from users where id = 1;
+select * from users where id = 16;
 
 select * from posts p
-inner join friends f
+left join friends f
 on (f.user_id1 = p."creatorId"
-or f.user_id2 = p."creatorId")
-and (f.user_id1 = 1 or f.user_id2 = 1);
---where "creatorId" != 1; --can only see posts not written by user
+	or f.user_id2 = p."creatorId")
+and (f.user_id1 = 16 or f.user_id2 = 16)
+left join favorites f2 on f2.post_id = p.id
+left join friends f3
+on (f3.user_id1 = f2.user_id 
+	or f3.user_id2 = f2.user_id)
+and (f3.user_id1 = 1 or f3.user_id2 = 1)
+where (f.user_id1 is not null
+		or f3.user_id1 is not null);
+--where "creatorId" != 16; --can only see posts not written by user
